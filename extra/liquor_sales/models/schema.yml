@@ -31,3 +31,11 @@ models:
         tests:
           - dbt_expectations.expect_column_values_to_be_of_type:
               column_type: date
+      - name: bottles_sold
+        description: 'Ensures bottles_sold is not null'
+        tests:
+          - dbt_expectations.expect_column_values_to_not_be_null
+      - name: invoice_and_item_number
+        description: 'Ensures values are unique'
+        tests:
+          - dbt_utils.not_constant
