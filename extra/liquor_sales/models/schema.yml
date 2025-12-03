@@ -3,6 +3,9 @@ version: 2
 models:
   - name: fact_sales
     description: "Fact table for item."
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "ROUND(sale_dollars, 1) = TRUNC(bottles_sold * state_bottle_retail, 1)"
     columns:
       - name: invoice_and_item_number
         description: "The primary key for this table"
@@ -15,3 +18,16 @@ models:
           - relationships:
               to: ref('dim_store')
               field: store_number
+      - name: date
+        tests:
+          - dbt_utils.accepted_range:
+                min_value: "PARSE_DATE('%F', '2012-01-01')"
+                max_value: "CURRENT_DATE()"
+      - name: invoice_and_item_number
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: string
+      - name: date
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: date
