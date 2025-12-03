@@ -20,7 +20,7 @@ Specs for `dbt_utils`:
 models:
   - name: fact_sales
     columns:
-        - name: invoice_and_item_number
+    - name: invoice_and_item_number
         description: 'Ensures values are unique'
         tests:
           - dbt_utils.not_constant
@@ -32,7 +32,7 @@ Specs for `dbt-expectations`:
 models:
   - name: fact_sales
     columns:
-      - name: bottles_sold
+    - name: bottles_sold
         description: 'Ensures bottles_sold is not null'
         tests:
           - dbt_expectations.expect_column_values_to_not_be_null
